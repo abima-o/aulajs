@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calcular Idade</title>   
+</head>
+<body>
+<h2>Calcule a Idade</h2>
+<form>
+    <label for="ddn">Data de Nascimento: </label>
+    <input type="date" id="ddn" name="ddn">
+    <button type="button" onclick="idade()">Calcular idade: </button>
+</form>
+
+<div id="resultado"></div>
+<p id="idade"></p>
+
+<script>
+    function idade(){
+     let ddn = new Date(document.getElementById("ddn").value);
+     let da = new Date();
+     let dif = da - ddn;
+     let idade = Math.floor(dif/ (1000 * 60 * 60 * 24 * 365.25));
+     
+     document.getElementById("idade").innerHTML = "Idade: " + idade + " anos";
+}
+</script>
+
+</body>
+</html>
