@@ -20,7 +20,7 @@
 //    lista.appendChild(postagem)
 //}
 
-const postIdSelecionado = 5; // ID do post que você quer selecionar
+const postIdSelecionado = 6; // ID do post que você quer selecionar
 
 fetch(`https://jsonplaceholder.typicode.com/comments?postId=${postIdSelecionado}`)
 .then(response => response.json())
