@@ -1,58 +1,55 @@
-const url = `https://worldcupjson.net/matches`;
+const url = 'https://worldcupjson.net/matches';
 
-
-
-function Dataas(jogos) {
-    const select = document.getElementById('data');
-    const Datas = [...new Set(jogos.map(jogo => jogo.id))];
-
-    Datas.forEach(data => {
-        const option = new Option(data, data);
-        select.add(option);
-    });
-    
-}
-
-
-
-async function processMatch(id) {
-let match_info = await fetch(`https://worldcupjson.net/matches/${id}/`);
-match_info = await match_info.json();
-return match_info;
-};
-
-function percorrerDetalhes(value, key, text) {
-if (typeof value == 'object') {
-    let keys = Object.keys(value);
-    text = `text + <br><b>${key.replace('_', ' ')}:</b><br><br>`;
-    for (let chave of keys) {
-        if (typeof value[chave] === 'object' && value[chave] !== null ) {
-            text = percorrerDetalhes(value[chave], chave, text)
-        }
-        else {
-           text = `text +   ${chave}: ${value[chave]}<br>`
-        }
+// Preenche o elemento select com IDs únicos dos jogos
+    function preencherSelect(jogos) {
+        const select = document.getElementById('data');
+        const ids = [...new Set(jogos.map(jogo => jogo.id))]; // Use `id` para criar opções no select
+        ids.forEach(id => {
+            const option = new Option(id, id);
+            select.add(option);
+        });
     }
-    return text;
-}
-else {
-    text = `text + ${key}: ${value}`;
-    return text;
-}
 
-};
+// Busca detalhes do jogo com base no ID selecionado
+    async function buscarDetalhesDoJogo(id) {
+        const response = await fetch(`https://worldcupjson.net/matches/${id}`);
+        const jogo = await response.json();
+        return jogo;
+        }
 
-function main(){
-    const data = document.getElementById("data").value;
-    let detalhes = processMatch(data)
-}
+// Gera HTML para exibir os detalhes do jogo
+    function gerarHtmlDetalhes(obj) {
+        let html = '';
+        function recursivo(valor, chave) {
+            if (typeof valor === 'object' && valor !== null) {
+                html += `<b>${chave.replace('_', ' ')}:</b><br>`;
+                Object.keys(valor).forEach(subChave => recursivo(valor[subChave], subChave));
+            } else {
+                html += `${chave}: ${valor}<br>`;
+            }
+        }
+        recursivo(obj, 'Detalhes do Jogo');
+        return html;
+    }
 
+// Lida com mudanças no elemento select e exibe os detalhes do jogo
+    async function lidarComMudancaSelect() {
+        const id = document.getElementById('data').value;
+        const jogo = await buscarDetalhesDoJogo(id);
+        const containerDetalhes = document.getElementById('details');
 
-fetch(url)
-    .then(response => response.json())
-    .then(jogos => {
-        Dataas(jogos);
-    })
-    .catch(error => {
-        console.error('Erro ao carregar dados para o select:', error);
-    });
+        containerDetalhes.innerHTML = gerarHtmlDetalhes(jogo);
+    }
+
+// Inicializa a página preenchendo o select e adicionando um listener de evento
+    function inicializar() {
+        fetch(url)
+            .then(response => response.json())
+            .then(jogos => preencherSelect(jogos))
+            .catch(error => console.error('Erro ao carregar dados para o select:', error));
+
+        document.getElementById('data').addEventListener('change', lidarComMudancaSelect);
+    }
+
+// Executa a inicialização
+inicializar();
