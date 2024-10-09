@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Pokémon</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        #information {
+            background-color: #ffffff;
+            padding: 20px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #information b {
+            color: #007bff;
+        }
+
+        #information p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Catálogo de Pokémon</h1>
+
+    <div class="container">
+        <label for="data">Escolha um Pokémon:</label>
+        <select id="data">
+            <option value="" disabled selected>Selecione um Pokémon</option>
+        </select>
+
+        <div id="information">
+            <p>Selecione um Pokémon para ver os detalhes.</p>
+        </div>
+    </div>
+
+    <script src="teste.js"></script>
