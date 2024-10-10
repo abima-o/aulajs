@@ -4,6 +4,9 @@ function preencherSelect(pokemons) {
     const select = document.getElementById("data");
     // Acessa a chave 'results' que contém os dados dos pokemons
     const names = [...new Set(pokemons.results.map(poke => poke.name))];
+
+    names.sort((a, b) => a.localeCompare(b));
+    
     names.forEach(name => {
         const option = new Option(name, name);
         select.add(option);
