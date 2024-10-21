@@ -40,8 +40,8 @@ function exibirPremios(ano) {
 
                 const anoDiv = document.createElement('div');
                 anoDiv.classList.add('data');
-                anoDiv.innerHTML = `<strong>Categoria:</strong> ${categoria} <br>
-                                    <strong>Laureado(s):</strong> ${laureados} <br>
+                anoDiv.innerHTML = `<strong>Categoria:</strong> ${categoria} <br><br>
+                                    <strong>Laureado(s):</strong> ${laureados} <br><br>
                                     <strong>Motivação:</strong> ${motivacao}<br><br>`;
                 
                 resultado.appendChild(anoDiv);
