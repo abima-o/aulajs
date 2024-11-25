@@ -10,6 +10,16 @@ class Livro {
         this._preco = preco;
     }
 
+    get preco(){
+        return this._preco;
+    }
+
+    set preco(novoPreco: number){
+        if (novoPreco >= 0)
+            this._preco = novo_preco;
+        else
+            console.log("Não permitido valores negativos ou nulos.")
+    }
 
 
     descrição(): string {
