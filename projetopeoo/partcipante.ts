@@ -45,7 +45,7 @@ export class Participante {
         }
     }
 }
-    
+
 
 function inscreverParticipante(event: Event) {
     event.preventDefault();

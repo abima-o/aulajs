@@ -69,7 +69,7 @@ function atualizarEventos() {
       tbody.appendChild(tr);
     });
 }
-  
+
 // Função para atualizar a lista de eventos no select (para inscrição de participantes)
 function atualizarEventosNoSelect() {
     eventoSelecionado.innerHTML = '<option value="" disabled selected>Selecione um evento:</option>';
