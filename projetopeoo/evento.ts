@@ -112,3 +112,4 @@ function atualizarEventosNoSelect() {
       eventoSelecionado.appendChild(option);
     });
 }
+
