@@ -6,20 +6,23 @@ export class Participante {
     private _evento: Evento;
 
     constructor(nome: string, email: string, evento: Evento) {
-        this._nome = nome;
-        this._email = email;
+        if (!evento) {
+            throw new Error("Evento inválido!");
+        }
+        this.nome = nome;
+        this.email = email;
         this._evento = evento;
     }
 
-    get nome(): string {
+    get nome(){
         return this._nome;
     }
 
     set nome(novoNome: string) {
-        if (novoNome.length > 0) {
+        if (novoNome.trim().length > 0) {
             this._nome = novoNome;
         } else {
-            console.log("O nome não pode ser vazio.");
+            throw new Error("O nome não pode ser vazio.");
         }
     }
 
@@ -32,27 +35,25 @@ export class Participante {
         if (emailRegex.test(email)) {
             this._email = email;
         } else {
-            console.log('Email inválido!');
+            throw new Error('Email inválido!');
         }
     }
 
     get evento(): Evento {
         return this._evento;
     }
-
-    set evento(novoEvento: Evento) {
-        if (novoEvento) {
-            this._evento = novoEvento;
-        } else {
-            console.log("Evento inválido!");
-        }
-    }
 }
 
-let eventoSelecionado: HTMLSelectElement;
+const eventoSelecionado = document.getElementById('evento-selecionado') as HTMLSelectElement | null;
+const participanteTabela = document.getElementById('participante-tabela') as HTMLTableElement | null;
+const formInscricao = document.getElementById('form-inscricao');
+
+if (!eventoSelecionado || !participanteTabela || !formInscricao) {
+    throw new Error('Elementos HTML não encontrados!');
+}
+
 let eventos: Evento[] = [];
 let participantes: Participante[] = [];
-let participanteTabela: HTMLTableElement;
 
 function inscreverParticipante(event: Event) {
     event.preventDefault();
@@ -66,6 +67,7 @@ function inscreverParticipante(event: Event) {
     if (eventoInscrito) {
         const participante = new Participante(nomeParticipante, emailParticipante, eventoInscrito);
         participantes.push(participante);
+        salvarParticipantes();
         atualizarParticipantes();
     } else {
         alert('Por favor, selecione um evento válido.');
@@ -73,37 +75,73 @@ function inscreverParticipante(event: Event) {
 }
 
 function atualizarParticipantes() {
-    const tbody = participanteTabela.querySelector('tbody');
-    if (tbody) {
-        tbody.innerHTML = '';
-
-        participantes.forEach(participante => {
-            const tr = document.createElement('tr');
-
-            const nomeTd = document.createElement('td');
-            nomeTd.textContent = participante.nome;
-            tr.appendChild(nomeTd);
-
-            const emailTd = document.createElement('td');
-            emailTd.textContent = participante.email;
-            tr.appendChild(emailTd);
-
-            const eventoTd = document.createElement('td');
-            eventoTd.textContent = participante.evento.nome;
-            tr.appendChild(eventoTd);
-
-            const buttonTd = document.createElement('td');
-            const button = document.createElement('button');
-            button.textContent = 'Gerar Certificado';
-            button.onclick = () => gerarCertificado(participante.nome, participante.email, participante.evento.nome, participante.evento.organizador.nome, participante.evento.data, participante.evento.local.nome);
-            buttonTd.appendChild(button);
-            tr.appendChild(buttonTd);
-
-            tbody.appendChild(tr);
-        });
+    let tbody = participanteTabela.querySelector('tbody');
+    if (!tbody) {
+        tbody = document.createElement('tbody');
+        participanteTabela.appendChild(tbody);
     }
+    tbody.innerHTML = '';
+
+    participantes.forEach(participante => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${participante.nome}</td>
+            <td>${participante.email}</td>
+            <td>${participante.evento.nome}</td>
+            <td><button onclick="gerarCertificado('${participante.nome}', '${participante.email}', '${participante.evento.nome}', '${participante.evento.organizador.nome}', '${participante.evento.data}', '${participante.evento.local.nome}')">Gerar Certificado</button></td>
+        `;
+        tbody.appendChild(tr);
+    });
 }
 
 function gerarCertificado(nome: string, email: string, eventoNome: string, organizadorNome: string, data: string, localNome: string) {
-    // Implementação da função
+    const conteudo = `
+        Certificado de Participação\n
+        Nome: ${nome}\n
+        Email: ${email}\n
+        Evento: ${eventoNome}\n
+        Organizador: ${organizadorNome}\n
+        Data: ${data}\n
+        Local: ${localNome}\n
+    `;
+    
+    const blob = new Blob([conteudo], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Certificado_${nome}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 }
+
+function salvarParticipantes() {
+    localStorage.setItem('participantes', JSON.stringify(participantes));
+}
+
+function carregarParticipantes() {
+    const dados = localStorage.getItem('participantes');
+    if (dados) {
+        participantes = JSON.parse(dados);
+        atualizarParticipantes();
+    }
+}
+
+formInscricao.addEventListener('submit', inscreverParticipante);
+
+// Carregar eventos fictícios
+const evento1 = new Evento('Evento 1', { nome: 'Organizador 1' }, '2023-10-01', { nome: 'Local 1' });
+const evento2 = new Evento('Evento 2', { nome: 'Organizador 2' }, '2023-11-01', { nome: 'Local 2' });
+
+eventos.push(evento1, evento2);
+
+function carregarEventos() {
+    eventos.forEach(evento => {
+        const option = document.createElement('option');
+        option.value = evento.nome;
+        option.textContent = evento.nome;
+        eventoSelecionado.appendChild(option);
+    });
+}
+
+carregarEventos();
+carregarParticipantes();

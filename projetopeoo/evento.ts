@@ -1,3 +1,5 @@
+import { Organizador } from './organizador';
+
 export class Evento {
     private _nome: string;
     private _data: Date;
