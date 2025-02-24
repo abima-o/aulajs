@@ -2,11 +2,11 @@ import { Organizador } from './organizador';
 
 export class Evento {
     private _nome: string;
-    private _data: Date;
-    private _local: Local;
+    private _data: string;
+    private _local: string;
     private _organizador: Organizador;
 
-    constructor(nome: string, data: Date, local: Local, organizador: Organizador){
+    constructor(nome: string, data: string, local: string, organizador: Organizador){
         this._nome = nome;
         this._data = data;
         this._local = local;
@@ -29,7 +29,7 @@ export class Evento {
         return this._data;
     }
 
-    set data(novoData: Date){
+    set data(novoData: string){
         if(novoData instanceof Date && !isNaN(novoData.getTime())){
             this._data = novoData;
         } else {
@@ -41,7 +41,7 @@ export class Evento {
         return this._local;
     }
 
-    set local(novoLocal: Local){
+    set local(novoLocal: string){
         if(novoLocal){
             this._local = novoLocal;
         } else {
@@ -50,7 +50,7 @@ export class Evento {
     }
 
     get organizador(){
-        return this._local;
+        return this._organizador;
     }
 
     set organizador(novoOrganizador: Organizador){

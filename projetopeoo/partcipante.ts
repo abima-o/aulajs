@@ -1,4 +1,5 @@
 import { Evento } from './evento';
+import { Organizador } from './organizador';
 
 export class Participante {
     private _nome: string;
@@ -128,7 +129,7 @@ function carregarParticipantes() {
 
 formInscricao.addEventListener('submit', inscreverParticipante);
 
-// Carregar eventos fictícios
+
 const evento1 = new Evento('Evento 1', { nome: 'Organizador 1' }, '2023-10-01', { nome: 'Local 1' });
 const evento2 = new Evento('Evento 2', { nome: 'Organizador 2' }, '2023-11-01', { nome: 'Local 2' });
 
