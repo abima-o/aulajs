@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inscrição de Participantes</title>
+</head>
+<body>
+    <form id="form-inscricao">
+        <input type="text" id="participante-nome" placeholder="Nome" required>
+        <input type="email" id="participante-email" placeholder="Email" required>
+        <select id="evento-selecionado"></select>
+        <button type="submit">Inscrever</button>
+    </form>
+
+    <table id="participante-tabela">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Evento</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <!-- Link para o arquivo JavaScript gerado -->
+    <script src="participante.js"></script>
+</body>
+</html>

@@ -76,14 +76,16 @@ function inscreverParticipante(event: Event) {
 }
 
 function atualizarParticipantes() {
+    console.log('Atualizando participantes');
     let tbody = participanteTabela.querySelector('tbody');
     if (!tbody) {
+        console.log('Criando novo tbody');
         tbody = document.createElement('tbody');
         participanteTabela.appendChild(tbody);
     }
+    console.log('Limpando tbody');
     tbody.innerHTML = '';
-
-    participantes.forEach(participante => {
+    participantes.forEach(function(participante) {
         const tr = document.createElement('tr');
         const button = document.createElement('button');
         button.textContent = "Gerar Certificado"
@@ -107,7 +109,6 @@ function atualizarParticipantes() {
         const tdButton = document.createElement('td')
         tdButton.appendChild(button);
         tr.appendChild(tdButton);
-
         tbody.appendChild(tr);
     });
 }

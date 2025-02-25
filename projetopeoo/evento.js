@@ -1,6 +1,5 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.Evento = void 0;
+exports.__esModule = true;
 var organizador_1 = require("./organizador");
 var Evento = /** @class */ (function () {
     function Evento(nome, data, local, organizador) {
@@ -21,7 +20,7 @@ var Evento = /** @class */ (function () {
                 console.log("O nome não pode ser vazio.");
             }
         },
-        enumerable: false,
+        enumerable: true,
         configurable: true
     });
     Object.defineProperty(Evento.prototype, "data", {
@@ -36,7 +35,7 @@ var Evento = /** @class */ (function () {
                 console.log("Data inválida!");
             }
         },
-        enumerable: false,
+        enumerable: true,
         configurable: true
     });
     Object.defineProperty(Evento.prototype, "local", {
@@ -51,7 +50,7 @@ var Evento = /** @class */ (function () {
                 console.log("Local inválido!");
             }
         },
-        enumerable: false,
+        enumerable: true,
         configurable: true
     });
     Object.defineProperty(Evento.prototype, "organizador", {
@@ -66,7 +65,7 @@ var Evento = /** @class */ (function () {
                 console.log("Esse organizador não existe!");
             }
         },
-        enumerable: false,
+        enumerable: true,
         configurable: true
     });
     return Evento;
@@ -95,7 +94,7 @@ function atualizarEventos() {
     tbody.innerHTML = '';
     eventos.forEach(function (evento) {
         var tr = document.createElement('tr');
-        tr.innerHTML = "\n        <td>".concat(evento.nome, "</td>\n        <td>").concat(evento.organizador.nome, "</td>\n        <td>").concat(evento.data, "</td>\n        <td>").concat(evento.local, "</td>\n      ");
+        tr.innerHTML = "\n        <td>" + evento.nome + "</td>\n        <td>" + evento.organizador.nome + "</td>\n        <td>" + evento.data + "</td>\n        <td>" + evento.local + "</td>\n      ";
         tbody.appendChild(tr);
     });
 }
