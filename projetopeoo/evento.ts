@@ -2,11 +2,11 @@ import { Organizador } from './organizador';
 
 export class Evento {
     private _nome: string;
-    private _data: string;
+    private _data: Date;
     private _local: string;
     private _organizador: Organizador;
 
-    constructor(nome: string, data: string, local: string, organizador: Organizador){
+    constructor(nome: string, data: Date, local: string, organizador: Organizador){
         this._nome = nome;
         this._data = data;
         this._local = local;
@@ -29,7 +29,7 @@ export class Evento {
         return this._data;
     }
 
-    set data(novoData: string){
+    set data(novoData: Date){
         if(novoData instanceof Date && !isNaN(novoData.getTime())){
             this._data = novoData;
         } else {
@@ -61,6 +61,7 @@ export class Evento {
         }
     }
 }
+const eventos: Evento[] = [];
 
 function adicionarEvento(event: Event) {
     event.preventDefault();
@@ -77,10 +78,9 @@ function adicionarEvento(event: Event) {
         return;
     }
 
-    const eventoLocal = new Local(eventoLocalNome);
+    
     const organizador = new Organizador(organizadorNome);
-
-    const novoEvento = new Evento(nomeEvento, eventoData, eventoLocal, organizador);
+    const novoEvento = new Evento(nomeEvento, eventoData, eventoLocalNome, organizador);
   
     eventos.push(novoEvento);
     atualizarEventos();
@@ -97,7 +97,7 @@ function atualizarEventos() {
         <td>${evento.nome}</td>
         <td>${evento.organizador.nome}</td>
         <td>${evento.data}</td>
-        <td>${evento.local.nome}</td>
+        <td>${evento.local}</td>
       `;
       tbody.appendChild(tr);
     });
